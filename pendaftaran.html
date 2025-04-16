@@ -1,0 +1,106 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Formulir Pendaftaran online</title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+
+<body> 
+    <div class="container">
+    <h2>Formulir Pendaftaran</h2>
+    <form id="form-pendaftaran" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="name" class="input-field" placeholder="Masukkan Nama Lengkap" required><br><br>
+        </div>
+        
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" id="email" class="input-field" placeholder="Masukkan Email" required><br><br>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Jenis Kelamin</label>
+            <div class="radio-button">
+                <label><input type="radio" name="gender" value="Laki-laki">Laki-laki</label>
+                <label><input type="radio" name="gender" value="Perempuan">Perempuan</label>
+            </div>
+        </div>
+
+        <div class="form-group">        
+            <label>Hobi Kamu</label>
+            <div class="options">
+                <input type="checkbox" id="hobi1" name="hobi" value="Membaca">
+                <label for="hobi1">Membaca</label>
+
+                <input type="checkbox" id="hobi2" name="hobi" value="Menulis">
+                <label for="hobi2">Menulis</label>
+
+                <input type="checkbox" id="hobi3" name="hobi" value="Ngoding">
+                <label for="hobi3">Ngoding</label><br><br>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Kota Tempat Tinggal</label>
+            <select id="kota">
+                <option value="">-- Pilih Kota --</option>
+                <option value="Jakarta">Jakarta</option>
+                <option value="Bandung">Bandung</option>
+                <option value="Bogor">Bogor</option>
+                <option value="Depok">Depok</option>
+                <option value="Solo">Solo</option>
+                <option value="Surabaya">Surabaya</option>
+            </select><br><br>
+        </div>
+
+        <button type="submit" id="submit-button" class="submit-button" value="submit-button" disabled>Submit</button>
+    </form>
+
+    <script>
+        // Fungsi untuk mengaktifkan tombol submit jika form sudah lengkap
+        function enableSubmit(){
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const hobi = document.querySelectorAll('input[name="hobi"]:checked').length;
+            const kota = document.getElementById("kota").value;
+
+            const isValid = name && email && gender && hobi > 0 && kota;
+            document.getElementById("submit-button").disabled = !isValid;
+        } 
+
+        // Fungsi untuk validasi form ketika disubmit
+        function validateForm(){
+            const email = document.getElementById("email").value;
+            
+            // Cek apakah email mengandung '@' dan '.'
+            if (!email.includes("@") || !email.includes(".")) {
+                alert("Email tidak valid. Pastikan mengandung '@' dan '.'");
+                return false; // Mencegah form dikirim
+            }
+            return true;
+        }
+
+        // Tambahkan event listener untuk setiap elemen form
+        document.addEventListener("DOMContentLoaded", () => {
+            const fields = [
+                document.getElementById("name"),
+                document.getElementById("email"),
+                document.getElementById("kota"),
+                ...document.querySelectorAll('input[name="gender"]'),
+                ...document.querySelectorAll('input[name="hobi"]'),
+            ];
+
+            fields.forEach(field => {
+                field.addEventListener("input", enableSubmit);
+                field.addEventListener("change", enableSubmit);
+            });
+
+            enableSubmit(); // Cek status awal tombol submit
+        });
+    </script>
+</div>
+</body>
+</html>
