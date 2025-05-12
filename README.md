@@ -1,6 +1,6 @@
 # Mini Project Pendaftaran
 
-Ini adalah mini project untuk simulasi form pendaftaran.
+Ini adalah mini project pendaftaran untuk test automation menggunakan selenium (python)
 
 ## Fitur
 - Form HTML untuk input data
